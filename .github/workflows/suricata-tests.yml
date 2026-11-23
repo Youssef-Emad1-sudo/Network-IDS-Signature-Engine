@@ -1,0 +1,30 @@
+name: Network IDS Regression Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  suricata-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Suricata
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y suricata
+
+      - name: Validate Suricata rules
+        run: |
+          suricata -T -c /etc/suricata/suricata.yaml \
+            -S rules/local.rules
+
+      - name: Run regression tests
+        run: |
+          sudo python3 scripts/test_rules.py
