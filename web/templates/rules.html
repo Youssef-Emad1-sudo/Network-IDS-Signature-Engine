@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIDS - Rules Explorer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+        <div class="logo">
+            <span class="logo-icon">⬡</span>
+            <h2>NIDS</h2>
+        </div>
+
+        <nav>
+            <a href="/" class="nav-link">▦ Dashboard</a>
+            <a href="/#alerts" class="nav-link">⚠ Alerts</a>
+            <a href="/#statistics" class="nav-link">⌁ Analysis</a>
+            <a href="/rules" class="nav-link active">⚙ Rules</a>
+        </nav>
+
+        <div class="sidebar-status">
+            <span class="status-dot"></span>
+            <strong>System Status</strong>
+            <small>All systems operational</small>
+        </div>
+
+        <div class="version">Network IDS v1.0</div>
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1>Rules Explorer</h1>
+                <p>Manage and review configured detection signatures</p>
+            </div>
+
+            <div class="admin">
+                <span class="status-dot"></span>
+                Admin
+            </div>
+        </header>
+
+
+        <!-- Statistics -->
+        <section class="stats">
+
+            <div class="card">
+                <h3>Total Rules</h3>
+                <p>{{ rules|length }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Rules Triggered</h3>
+                <p>{{ rules|selectattr('hits', 'gt', 0)|list|length }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Rules Not Triggered</h3>
+                <p>{{ rules|selectattr('hits', 'equalto', 0)|list|length }}</p>
+            </div>
+
+        </section>
+
+
+        <!-- Rules Table -->
+        <section class="results">
+
+            <div class="section-header">
+                <div>
+                    <h2>Detection Signatures</h2>
+                    <p>All rules loaded from local.rules</p>
+                </div>
+            </div>
+
+
+            <!-- Search and Filter -->
+            <div class="rules-filters">
+
+                <input
+                    type="text"
+                    id="ruleSearch"
+                    placeholder="Search by SID or Rule Name..."
+                >
+
+                <select id="ruleFilter">
+                    <option value="all">All Rules</option>
+                    <option value="triggered">Triggered</option>
+                    <option value="not-triggered">Not Triggered</option>
+                </select>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table id="rulesTable">
+
+                    <thead>
+                        <tr>
+                            <th>SID</th>
+                            <th>Rule Name</th>
+                            <th>Revision</th>
+                            <th>Alert Hits</th>
+                            <th>Activity</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="rulesTableBody">
+
+                    {% for rule in rules %}
+
+                        <tr class="rule-row"
+                            data-activity="{% if rule.hits > 0 %}triggered{% else %}not-triggered{% endif %}">
+
+                            <td>{{ rule.sid }}</td>
+
+                            <td>{{ rule.name }}</td>
+
+                            <td>Rev {{ rule.revision }}</td>
+
+                            <td>{{ rule.hits }}</td>
+
+                            <td>
+                                {% if rule.hits > 0 %}
+                                    <span class="status pass">Triggered</span>
+                                {% else %}
+                                    <span class="category benign">Not Triggered</span>
+                                {% endif %}
+                            </td>
+
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="5">No rules found</td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+                <p id="noRulesMessage" style="display:none; padding:15px;">
+                    No matching rules found.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <footer>
+            Network IDS Signature Engine | Rules Explorer
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- Rules Search and Filter -->
+<script>
+const searchInput = document.getElementById("ruleSearch");
+const filterSelect = document.getElementById("ruleFilter");
+const rows = document.querySelectorAll(".rule-row");
+const noRulesMessage = document.getElementById("noRulesMessage");
+
+function filterRules() {
+
+    const searchValue = searchInput.value.toLowerCase().trim();
+    const selectedFilter = filterSelect.value;
+
+    let visibleCount = 0;
+
+    rows.forEach(row => {
+
+        const rowText = row.textContent.toLowerCase();
+        const activity = row.dataset.activity;
+
+        const matchesSearch = rowText.includes(searchValue);
+
+        const matchesFilter =
+            selectedFilter === "all" ||
+            activity === selectedFilter;
+
+        if (matchesSearch && matchesFilter) {
+            row.style.display = "";
+            visibleCount++;
+        } else {
+            row.style.display = "none";
+        }
+
+    });
+
+    noRulesMessage.style.display =
+        visibleCount === 0 ? "block" : "none";
+}
+
+searchInput.addEventListener("input", filterRules);
+filterSelect.addEventListener("change", filterRules);
+</script>
+
+</body>
+</html>

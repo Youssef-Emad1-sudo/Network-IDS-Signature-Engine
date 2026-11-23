@@ -1,0 +1,20 @@
+# Python virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# Generated temporary files
+*.log
+*.tmp
+
+# IDE settings
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+# Backup files
+*.save
+# Temporary Suricata test logs
+reports/test*/

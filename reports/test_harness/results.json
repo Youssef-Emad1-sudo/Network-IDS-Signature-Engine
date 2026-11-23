@@ -1,0 +1,407 @@
+{
+    "project": "Network IDS Signature Engine",
+    "total_pcaps": 23,
+    "benign_pcaps": 8,
+    "malicious_pcaps": 15,
+    "passed": 23,
+    "failed": 0,
+    "false_positives": {},
+    "false_negatives": {},
+    "results": [
+        {
+            "pcap": "01_normal_http.pcap",
+            "category": "benign",
+            "status": "PASS",
+            "expected_sids": [],
+            "actual_sids": [],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": []
+        },
+        {
+            "pcap": "02_normal_http_get.pcap",
+            "category": "benign",
+            "status": "PASS",
+            "expected_sids": [],
+            "actual_sids": [],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": []
+        },
+        {
+            "pcap": "03_normal_dns.pcap",
+            "category": "benign",
+            "status": "PASS",
+            "expected_sids": [],
+            "actual_sids": [],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": []
+        },
+        {
+            "pcap": "04_icmp_echo.pcap",
+            "category": "benign",
+            "status": "PASS",
+            "expected_sids": [],
+            "actual_sids": [],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": []
+        },
+        {
+            "pcap": "04_normal_https_handshake.pcap",
+            "category": "benign",
+            "status": "PASS",
+            "expected_sids": [],
+            "actual_sids": [],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": []
+        },
+        {
+            "pcap": "05_normal_ping.pcap",
+            "category": "benign",
+            "status": "PASS",
+            "expected_sids": [],
+            "actual_sids": [],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": []
+        },
+        {
+            "pcap": "06_ftp_connection.pcap",
+            "category": "benign",
+            "status": "PASS",
+            "expected_sids": [],
+            "actual_sids": [],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": []
+        },
+        {
+            "pcap": "06_normal_ftp_connection.pcap",
+            "category": "benign",
+            "status": "PASS",
+            "expected_sids": [],
+            "actual_sids": [],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": []
+        },
+        {
+            "pcap": "01_suspicious_user_agent.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000001
+            ],
+            "actual_sids": [
+                1000001
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000001,
+                    "rule_name": "Suspicious User-Agent"
+                }
+            ]
+        },
+        {
+            "pcap": "02_suspicious_dns.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000002
+            ],
+            "actual_sids": [
+                1000002
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000002,
+                    "rule_name": "Suspicious DNS Query"
+                }
+            ]
+        },
+        {
+            "pcap": "03_tcp_port_scan.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000003,
+                1000005,
+                1000007
+            ],
+            "actual_sids": [
+                1000003,
+                1000005,
+                1000007
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000003,
+                    "rule_name": "TCP SYN Port Scan"
+                },
+                {
+                    "sid": 1000005,
+                    "rule_name": "SSH Connection"
+                },
+                {
+                    "sid": 1000007,
+                    "rule_name": "Telnet Connection"
+                }
+            ]
+        },
+        {
+            "pcap": "05_ssh_connection.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000005
+            ],
+            "actual_sids": [
+                1000005
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000005,
+                    "rule_name": "SSH Connection"
+                }
+            ]
+        },
+        {
+            "pcap": "07_telnet_connection.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000007
+            ],
+            "actual_sids": [
+                1000007
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000007,
+                    "rule_name": "Telnet Connection"
+                }
+            ]
+        },
+        {
+            "pcap": "08_http_post.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000008
+            ],
+            "actual_sids": [
+                1000008
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000008,
+                    "rule_name": "HTTP POST Request"
+                }
+            ]
+        },
+        {
+            "pcap": "10_directory_traversal.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000010
+            ],
+            "actual_sids": [
+                1000010
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000010,
+                    "rule_name": "Directory Traversal Attempt"
+                }
+            ]
+        },
+        {
+            "pcap": "11_icmp_ping_sweep.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000011
+            ],
+            "actual_sids": [
+                1000011
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000011,
+                    "rule_name": "ICMP Ping Sweep"
+                }
+            ]
+        },
+        {
+            "pcap": "12_dns_suspicious_xyz.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000012
+            ],
+            "actual_sids": [
+                1000012
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000012,
+                    "rule_name": "Suspicious XYZ Domain"
+                }
+            ]
+        },
+        {
+            "pcap": "13_tcp_syn_flood.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000003,
+                1000013
+            ],
+            "actual_sids": [
+                1000003,
+                1000013
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000003,
+                    "rule_name": "TCP SYN Port Scan"
+                },
+                {
+                    "sid": 1000013,
+                    "rule_name": "TCP SYN Flood"
+                }
+            ]
+        },
+        {
+            "pcap": "14_ssh_repeated_attempts.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000003,
+                1000005,
+                1000014
+            ],
+            "actual_sids": [
+                1000003,
+                1000005,
+                1000014
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000003,
+                    "rule_name": "TCP SYN Port Scan"
+                },
+                {
+                    "sid": 1000005,
+                    "rule_name": "SSH Connection"
+                },
+                {
+                    "sid": 1000014,
+                    "rule_name": "Repeated SSH Attempts"
+                }
+            ]
+        },
+        {
+            "pcap": "15_smb_connection.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000015
+            ],
+            "actual_sids": [
+                1000015
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000015,
+                    "rule_name": "SMB Connection"
+                }
+            ]
+        },
+        {
+            "pcap": "16_wp_config_access.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000009
+            ],
+            "actual_sids": [
+                1000009
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000009,
+                    "rule_name": "WordPress Config File Access"
+                }
+            ]
+        },
+        {
+            "pcap": "17_large_icmp.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000004
+            ],
+            "actual_sids": [
+                1000004
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000004,
+                    "rule_name": "Large ICMP Echo Request"
+                }
+            ]
+        },
+        {
+            "pcap": "18_ftp_pass.pcap",
+            "category": "malicious",
+            "status": "PASS",
+            "expected_sids": [
+                1000006
+            ],
+            "actual_sids": [
+                1000006
+            ],
+            "missing_sids": [],
+            "unexpected_sids": [],
+            "alerts": [
+                {
+                    "sid": 1000006,
+                    "rule_name": "FTP Cleartext Password"
+                }
+            ]
+        }
+    ]
+}

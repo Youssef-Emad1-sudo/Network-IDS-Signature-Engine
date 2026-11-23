@@ -1,0 +1,6 @@
+NETWORK IDS TEST SUMMARY
+Tests executed: 23
+Passed: 23
+Failed: 0
+False positives: {}
+False negatives: {}

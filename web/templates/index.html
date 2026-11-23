@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIDS - Security Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <span class="logo-icon">⬡</span>
+            <h2>NIDS</h2>
+        </div>
+
+        <nav>
+            <a href="/" class="nav-link active">▦ Dashboard</a>
+            <a href="/#alerts" class="nav-link">⚠ Alerts</a>
+            <a href="/#statistics" class="nav-link">⌁ Analysis</a>
+            <a href="/rules" class="nav-link">⚙ Rules</a>
+        </nav>
+
+        <div class="sidebar-status">
+            <span class="status-dot"></span>
+            <strong>System Status</strong>
+            <small>All systems operational</small>
+        </div>
+
+        <div class="version">
+            Network IDS v1.0
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Header -->
+        <header class="topbar">
+
+            <div>
+                <h1>Network Intrusion Detection System</h1>
+                <p>Security Monitoring Dashboard</p>
+            </div>
+
+            <div class="admin">
+                <span class="status-dot"></span>
+                Admin
+            </div>
+
+        </header>
+
+
+        <!-- Statistics -->
+        <section class="stats" id="statistics">
+
+            <div class="card">
+                <h3>Total PCAPs</h3>
+                <p>{{ data.total_pcaps }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Passed Tests</h3>
+                <p>{{ data.passed }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Failed Tests</h3>
+                <p>{{ data.failed }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Benign PCAPs</h3>
+                <p>{{ data.benign_pcaps }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Malicious PCAPs</h3>
+                <p>{{ data.malicious_pcaps }}</p>
+            </div>
+
+        </section>
+
+
+        <!-- Detection Alerts -->
+        <section class="results" id="alerts">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Detection Alerts</h2>
+                    <p>Browse rules triggered by each PCAP file</p>
+                </div>
+
+            </div>
+
+
+            <!-- Search and Filter -->
+            <form method="GET" action="/" id="filter-form">
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search PCAP, SID, or Rule..."
+                    value="{{ search }}"
+                >
+
+                <select name="category">
+
+                    <option value="all"
+                        {% if category == 'all' %}selected{% endif %}>
+                        All Categories
+                    </option>
+
+                    <option value="benign"
+                        {% if category == 'benign' %}selected{% endif %}>
+                        Benign
+                    </option>
+
+                    <option value="malicious"
+                        {% if category == 'malicious' %}selected{% endif %}>
+                        Malicious
+                    </option>
+
+                </select>
+
+                <button type="submit">Search</button>
+
+            </form>
+
+
+            <!-- Detection Results Table -->
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>PCAP File</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>SID</th>
+                            <th>Rule Name</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for item in results %}
+
+                        {% if item.alerts %}
+
+                            {% for alert in item.alerts %}
+
+                            <tr>
+
+                                <td>{{ item.pcap }}</td>
+
+                                <td>
+                                    <span class="category {{ item.category|lower }}">
+                                        {{ item.category }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="status {{ item.status|lower }}">
+                                        {{ item.status }}
+                                    </span>
+                                </td>
+
+                                <td>{{ alert.sid }}</td>
+
+                                <td>{{ alert.rule_name }}</td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            <tr>
+
+                                <td>{{ item.pcap }}</td>
+
+                                <td>
+                                    <span class="category {{ item.category|lower }}">
+                                        {{ item.category }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="status {{ item.status|lower }}">
+                                        {{ item.status }}
+                                    </span>
+                                </td>
+
+                                <td colspan="2">
+                                    No alerts detected
+                                </td>
+
+                            </tr>
+
+                        {% endif %}
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="5">No results found</td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer>
+            Network IDS Signature Engine | Security Monitoring
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
