@@ -20,14 +20,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y suricata
 
-      - name: Configure Suricata rules
-        run: |
-          sudo sed -i '/^rule-files:/a\  - '"$GITHUB_WORKSPACE"'/rules/local.rules' /etc/suricata/suricata.yaml
-
       - name: Validate Suricata rules
         run: |
           mkdir -p /tmp/suricata-logs
-          suricata -T -c /etc/suricata/suricata.yaml \
+          suricata -T \
+            -c /etc/suricata/suricata.yaml \
+            -S rules/local.rules \
             -l /tmp/suricata-logs
 
       - name: Run regression tests
